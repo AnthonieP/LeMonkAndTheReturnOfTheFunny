@@ -186,5 +186,10 @@ public class PlayerController : MonoBehaviour
             Instantiate(other.GetComponent<Hat>().hat, hatSlot.transform.position, hatSlot.transform.rotation, hatSlot.transform);
             Destroy(other.gameObject);
         }
+
+        if(other.transform.tag == "Barrel")
+        {
+            other.GetComponent<Barrel>().ShootPrep();
+        }
     }
 }
