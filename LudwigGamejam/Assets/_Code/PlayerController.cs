@@ -26,6 +26,7 @@ public class PlayerController : MonoBehaviour
     Vector3 mousePos;
     Quaternion modelStartRot;
     public float modelLerpRot;
+    public bool isPaused = true;
     [Header("Effects")]
     public ParticleSystem fartParticle;
     public GameObject wallHitParticleObj;
@@ -50,11 +51,14 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        GetMousePos();
-        PullManage();
-        if (!isHoldingFire1)
+        if (!isPaused)
         {
-            model.transform.localScale = Vector3.Lerp(model.transform.localScale, startScale, stretchBackSpeed * Time.deltaTime);
+            GetMousePos();
+            PullManage();
+            if (!isHoldingFire1)
+            {
+                model.transform.localScale = Vector3.Lerp(model.transform.localScale, startScale, stretchBackSpeed * Time.deltaTime);
+            }
         }
 
     }

@@ -9,6 +9,7 @@ public class Options : MonoBehaviour
     [Header("Objects")]
     public GameObject menuObj;
     public GameObject optionsObj;
+    public PlayerController player;
     [Header("Audio")]
     public AudioMixer audioMixer;
     [Header("Resolutions")]
@@ -25,7 +26,10 @@ public class Options : MonoBehaviour
         if (menuObj.active)
         {
             Time.timeScale = 0.00001f;
+            player.isPaused = true;
         }
+
+        GetResolutions();
     }
 
     private void Update()
@@ -37,6 +41,28 @@ public class Options : MonoBehaviour
         }
     }
 
+    void GetResolutions()
+    {
+        resolutions = Screen.resolutions;
+        resolutionDropdown.ClearOptions();
+        List<string> resolutionStrings = new List<string>();
+
+        int currentResInt = 0;
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            resolutionStrings.Add(resolutions[i].width + " x " + resolutions[i].height);
+
+            if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
+            {
+                currentResInt = i;
+            }
+        }
+
+        resolutionDropdown.AddOptions(resolutionStrings);
+        resolutionDropdown.value = currentResInt;
+        resolutionDropdown.RefreshShownValue();
+    }
+
     public void StartButton()
     {
         menuObj.SetActive(!menuObj.active);
@@ -44,10 +70,11 @@ public class Options : MonoBehaviour
         if (menuObj.active)
         {
             Time.timeScale = 0.00001f;
+            player.isPaused = true;
         }
         else
         {
-            Time.timeScale = 1f;
+            StartCoroutine(ActivatePlayer(.01f * Time.timeScale));
         }
     }
 
@@ -85,6 +112,13 @@ public class Options : MonoBehaviour
     {
         Screen.fullScreen = fullscreen;
         fullscreenToggle.isOn = fullscreen;
+    }
+
+    IEnumerator ActivatePlayer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        Time.timeScale = 1f;
+        player.isPaused = false;
     }
 
     public void QuitButton()

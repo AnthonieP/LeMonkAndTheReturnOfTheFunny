@@ -74,6 +74,15 @@ public class SaveSystem : MonoBehaviour
             if(player != null && setPlayerPos)
             {
                 player.transform.position = new Vector3(dataHolder.playerXPos, dataHolder.playerYPos, player.transform.position.z);
+                if(FindObjectOfType<CameraController>() != null)
+                {
+                    FindObjectOfType<CameraController>().GoToPlayer();
+                    TrailRenderer[] trailRenderers = FindObjectsOfType<TrailRenderer>();
+                    for (int i = 0; i < trailRenderers.Length; i++)
+                    {
+                        trailRenderers[i].Clear();
+                    }
+                }
             }
         }
     }
