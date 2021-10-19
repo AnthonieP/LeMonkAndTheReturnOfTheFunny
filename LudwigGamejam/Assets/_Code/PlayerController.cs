@@ -127,7 +127,7 @@ public class PlayerController : MonoBehaviour
         }
     }
 
-    void RotateTo(Vector3 target, Transform thingToRotate, float rotSpeed)
+    public void RotateTo(Vector3 target, Transform thingToRotate, float rotSpeed)
     {
         // Determine which direction to rotate towards
         Vector3 targetDirection = target - thingToRotate.position;
