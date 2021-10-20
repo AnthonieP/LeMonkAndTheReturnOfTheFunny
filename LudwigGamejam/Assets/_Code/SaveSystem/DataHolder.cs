@@ -14,4 +14,8 @@ public class DataHolder
     //Player Info
     public float playerXPos;
     public float playerYPos;
+    public int hatID;
+
+    //Game Info
+    public float playTime;
 }

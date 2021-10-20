@@ -8,6 +8,7 @@ TagManager:
   - Floor
   - Hat
   - Barrel
+  - Mushroom
   layers:
   - Default
   - TransparentFX

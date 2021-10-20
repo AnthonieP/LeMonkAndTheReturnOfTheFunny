@@ -52,9 +52,11 @@ public class SaveSystem : MonoBehaviour
         dataHolder.music = options.musicSlider.value;
         dataHolder.soundEffects = options.soundEffectsSlider.value;
         dataHolder.fullscreen = options.fullscreenToggle.isOn;
+        dataHolder.playTime = options.playTime;
 
         dataHolder.playerXPos = player.transform.position.x;
         dataHolder.playerYPos = player.transform.position.y;
+        dataHolder.hatID = player.curHatID;
 
     }
 
@@ -69,11 +71,14 @@ public class SaveSystem : MonoBehaviour
                 options.SetMusic(dataHolder.music);
                 options.SetSoundEffects(dataHolder.soundEffects);
                 options.SetFullscreen(dataHolder.fullscreen);
+                options.playTime = dataHolder.playTime;
+                options.SetTime();
             }
 
             if(player != null && setPlayerPos)
             {
                 player.transform.position = new Vector3(dataHolder.playerXPos, dataHolder.playerYPos, player.transform.position.z);
+                player.PutOnHat(dataHolder.hatID);
                 if(FindObjectOfType<CameraController>() != null)
                 {
                     FindObjectOfType<CameraController>().GoToPlayer();

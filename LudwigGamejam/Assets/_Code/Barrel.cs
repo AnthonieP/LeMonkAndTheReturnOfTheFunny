@@ -50,6 +50,7 @@ public class Barrel : MonoBehaviour
 
     public void ShootPrep()
     {
+        player.isFrozen = true;
         player.model.SetActive(false);
         player.rigidbody.useGravity = false;
         player.rigidbody.velocity = Vector3.zero;
@@ -76,6 +77,13 @@ public class Barrel : MonoBehaviour
         playerIsInside = false;
         animator.SetBool("GotIn", false);
         animator.SetBool("Shoot", true);
+        StartCoroutine(UnFreezePlayer(.3f));
     }
 
+
+    IEnumerator UnFreezePlayer(float delay)
+    {
+        yield return new WaitForSeconds(delay);
+        player.isFrozen = false;
+    }
 }

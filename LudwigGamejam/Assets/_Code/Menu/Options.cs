@@ -9,9 +9,14 @@ public class Options : MonoBehaviour
     [Header("Objects")]
     public GameObject menuObj;
     public GameObject optionsObj;
+    public GameObject resetObj;
     public PlayerController player;
     [Header("Audio")]
     public AudioMixer audioMixer;
+    [Header("GameInfo")]
+    public float playTime;
+    public Text playTimeText;
+    public Vector3 playerSpawn;
     [Header("Resolutions")]
     Resolution[] resolutions;
     [Header("Buttons")]
@@ -39,6 +44,8 @@ public class Options : MonoBehaviour
         {
             StartButton();
         }
+
+        playTime += Time.deltaTime;
     }
 
     void GetResolutions()
@@ -65,6 +72,7 @@ public class Options : MonoBehaviour
 
     public void StartButton()
     {
+        SetTime();
         menuObj.SetActive(!menuObj.active);
 
         if (menuObj.active)
@@ -76,11 +84,59 @@ public class Options : MonoBehaviour
         {
             StartCoroutine(ActivatePlayer(.01f * Time.timeScale));
         }
+
     }
 
     public void OptionsButton()
     {
         optionsObj.SetActive(!optionsObj.active);
+        resetObj.SetActive(false);
+    }
+
+    public void RestartButton()
+    {
+        resetObj.SetActive(!resetObj.active);
+        optionsObj.SetActive(false);
+    }
+
+    public void RestartConfirmationButton()
+    {
+        playTime = 0;
+        player.transform.position = playerSpawn;
+        player.PutOnHat(0);
+
+        if (FindObjectOfType<CameraController>() != null)
+        {
+            FindObjectOfType<CameraController>().GoToPlayer();
+            TrailRenderer[] trailRenderers = FindObjectsOfType<TrailRenderer>();
+            for (int i = 0; i < trailRenderers.Length; i++)
+            {
+                trailRenderers[i].Clear();
+            }
+        }
+    }
+
+    public void SetTime()
+    {
+        float roundPlayMins = Mathf.RoundToInt((playTime / 60) - 0.5f);
+        float secs = playTime - (roundPlayMins * 60);
+        string minString = roundPlayMins.ToString("#");
+        string secString = secs.ToString("#");
+        if(roundPlayMins < 1)
+        {
+            minString = "0";
+        }
+        if (secs < 1)
+        {
+            secString = "00";
+        }
+        else if(secs < 10)
+        {
+            secString = "0" + secs.ToString("#");
+        }
+
+
+        playTimeText.text = minString + ":" + secString;
     }
 
     public void SetSoundEffects(float volume)

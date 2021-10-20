@@ -21,12 +21,15 @@ public class PlayerController : MonoBehaviour
     public GameObject pullPointer;
     public GameObject model;
     public GameObject hatSlot;
+    public GameObject[] hats;
+    public int curHatID;
     [Header("States")]
     bool isHoldingFire1 = false;
     Vector3 mousePos;
     Quaternion modelStartRot;
     public float modelLerpRot;
     public bool isPaused = true;
+    public bool isFrozen = false;
     [Header("Effects")]
     public ParticleSystem fartParticle;
     public GameObject wallHitParticleObj;
@@ -51,7 +54,7 @@ public class PlayerController : MonoBehaviour
 
     private void Update()
     {
-        if (!isPaused)
+        if (!isPaused && !isFrozen)
         {
             GetMousePos();
             PullManage();
@@ -73,6 +76,7 @@ public class PlayerController : MonoBehaviour
             //start jump prep
             if (Input.GetButtonDown("Fire1"))
             {
+                pullForce = minPullForce;
                 isHoldingFire1 = true;
                 pullPointer.SetActive(true);
             }
@@ -88,7 +92,6 @@ public class PlayerController : MonoBehaviour
                 Vector3 rotPos = new Vector3(mousePos.x, mousePos.y, model.transform.position.z);
                 RotateTo(rotPos, model.transform, 999);
                 model.transform.Rotate(0, 180, 0);
-                pullForce = minPullForce;
 
                 fartParticle.Play();
                 if(fart1SoundObj != null)
@@ -129,6 +132,19 @@ public class PlayerController : MonoBehaviour
         {
             mousePos = hit.point;
         }
+    }
+
+    public void PutOnHat(int hatID)
+    {
+        if (hatSlot.transform.childCount > 0)
+        {
+            Destroy(hatSlot.transform.GetChild(0).gameObject);
+        }
+        if(hats[hatID] != null)
+        {
+            Instantiate(hats[hatID], hatSlot.transform.position, hatSlot.transform.rotation, hatSlot.transform);
+        }
+        curHatID = hatID;
     }
 
     public void RotateTo(Vector3 target, Transform thingToRotate, float rotSpeed)
@@ -174,6 +190,7 @@ public class PlayerController : MonoBehaviour
                 }
             }
         }
+        
     }
 
     private void OnTriggerEnter(Collider other)
@@ -187,13 +204,18 @@ public class PlayerController : MonoBehaviour
 
             Instantiate(pickUpParticleObj, other.transform.position, Quaternion.identity);
             Instantiate(pickUpSoundObj, transform.position, Quaternion.identity);
-            Instantiate(other.GetComponent<Hat>().hat, hatSlot.transform.position, hatSlot.transform.rotation, hatSlot.transform);
+            PutOnHat(other.GetComponent<Hat>().hatID);
             Destroy(other.gameObject);
         }
 
         if(other.transform.tag == "Barrel")
         {
             other.GetComponent<Barrel>().ShootPrep();
+        }
+
+        if (other.transform.tag == "Mushroom")
+        {
+            other.transform.GetComponent<Mushroom>().BouncePlayer(this);
         }
     }
 }

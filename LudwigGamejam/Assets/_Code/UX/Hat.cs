@@ -4,5 +4,5 @@ using UnityEngine;
 
 public class Hat : MonoBehaviour
 {
-    public GameObject hat;
+    public int hatID;
 }
