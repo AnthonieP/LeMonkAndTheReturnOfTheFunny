@@ -61,23 +61,26 @@ public class Barrel : MonoBehaviour
 
     void ShootPlayer()
     {
-        Instantiate(weeeSoundObj, transform.position, Quaternion.identity);
-        Instantiate(explosionSoundObj, transform.position, Quaternion.identity);
-        if(explosionParticle != null)
+        if (!player.isPaused)
         {
-            explosionParticle.Play();
-        }
+            Instantiate(weeeSoundObj, transform.position, Quaternion.identity);
+            Instantiate(explosionSoundObj, transform.position, Quaternion.identity);
+            if(explosionParticle != null)
+            {
+                explosionParticle.Play();
+            }
 
-        player.transform.position = transform.position;
-        player.model.SetActive(true);
-        player.rigidbody.useGravity = true;
-        player.rigidbody.AddForce(transform.up * shootForce);
-        player.RotateTo(transform.up, player.model.transform, 99);
-        player.model.transform.Rotate(0, 180, 0);
-        playerIsInside = false;
-        animator.SetBool("GotIn", false);
-        animator.SetBool("Shoot", true);
-        StartCoroutine(UnFreezePlayer(.3f));
+            player.transform.position = transform.position;
+            player.model.SetActive(true);
+            player.rigidbody.useGravity = true;
+            player.rigidbody.AddForce(transform.up * shootForce);
+            player.RotateTo(transform.up, player.model.transform, 99);
+            player.model.transform.Rotate(0, 180, 0);
+            playerIsInside = false;
+            animator.SetBool("GotIn", false);
+            animator.SetBool("Shoot", true);
+            StartCoroutine(UnFreezePlayer(.12f));
+        }
     }
 
 

@@ -9,6 +9,7 @@ TagManager:
   - Hat
   - Barrel
   - Mushroom
+  - Cinematic
   layers:
   - Default
   - TransparentFX

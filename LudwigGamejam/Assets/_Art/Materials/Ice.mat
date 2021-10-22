@@ -68,7 +68,7 @@ Material:
     - _Mode: 0
     - _OcclusionStrength: 1
     - _Parallax: 0.02
-    - _RimEffect: 1.36
+    - _RimEffect: 1.3
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
@@ -78,5 +78,5 @@ Material:
     - _Color: {r: 0, g: 0.6500472, b: 0.7075472, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
     - _MainCol: {r: 0, g: 0.76477885, b: 1, a: 1}
-    - _RimCol: {r: 2.9960785, g: 2.9960785, b: 2.9960785, a: 1}
+    - _RimCol: {r: 2.9960785, g: 2.9960785, b: 2.9960785, a: 0.4392157}
   m_BuildTextureStacks: []

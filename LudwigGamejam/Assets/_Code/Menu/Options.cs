@@ -57,6 +57,7 @@ public class Options : MonoBehaviour
         int currentResInt = 0;
         for (int i = 0; i < resolutions.Length; i++)
         {
+            
             resolutionStrings.Add(resolutions[i].width + " x " + resolutions[i].height);
 
             if (resolutions[i].width == Screen.currentResolution.width && resolutions[i].height == Screen.currentResolution.height)
@@ -102,8 +103,12 @@ public class Options : MonoBehaviour
     public void RestartConfirmationButton()
     {
         playTime = 0;
+        player.rigidbody.velocity = Vector3.zero;
         player.transform.position = playerSpawn;
+        player.isFrozen = false;
         player.PutOnHat(0);
+
+        FindObjectOfType<Camera>().orthographicSize = 5;
 
         if (FindObjectOfType<CameraController>() != null)
         {

@@ -208,14 +208,22 @@ public class PlayerController : MonoBehaviour
             Destroy(other.gameObject);
         }
 
-        if(other.transform.tag == "Barrel")
+        if (!isFrozen)
         {
-            other.GetComponent<Barrel>().ShootPrep();
+            if(other.transform.tag == "Barrel")
+            {
+                other.GetComponent<Barrel>().ShootPrep();
+            }
         }
 
         if (other.transform.tag == "Mushroom")
         {
             other.transform.GetComponent<Mushroom>().BouncePlayer(this);
+        }
+
+        if(other.tag == "Cinematic")
+        {
+            other.GetComponent<Cinematic>().StartCinematic();
         }
     }
 }

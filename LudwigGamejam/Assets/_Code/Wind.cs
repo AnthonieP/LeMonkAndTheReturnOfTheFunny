@@ -4,14 +4,19 @@ using UnityEngine;
 
 public class Wind : MonoBehaviour
 {
-    public Vector3 windForce;
+    public float windForce;
+    public ParticleSystem windParticle;
+    public BoxCollider windCollider;
 
+    private void Start()
+    {
+    }
 
     private void OnTriggerStay(Collider other)
     {
         if(other.tag == "Player")
         {
-            other.GetComponent<Rigidbody>().AddForce(windForce * Time.deltaTime);
+            other.GetComponent<Rigidbody>().AddForce(transform.right * windForce * Time.deltaTime);
         }
     }
 }
