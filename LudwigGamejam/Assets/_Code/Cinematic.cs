@@ -12,6 +12,7 @@ public class Cinematic : MonoBehaviour
     public CameraController camera;
     public AudioSource audio;
     public AudioClip monkeyFreakClip;
+    public AudioSource endSong;
     public Text creditText;
     public Text timeText;
 
@@ -120,6 +121,7 @@ public class Cinematic : MonoBehaviour
         camera.GetComponent<Camera>().orthographicSize = 5;
         camera.StartGoingDown();
         camera.transform.position = new Vector3(0, camera.transform.position.y - 5, camera.transform.position.z);
+        endSong.Play();
         StartCoroutine(CutEleven(3));
     }
 

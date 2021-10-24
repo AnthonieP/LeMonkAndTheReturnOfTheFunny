@@ -30,11 +30,13 @@ public class PlayerController : MonoBehaviour
     public float modelLerpRot;
     public bool isPaused = true;
     public bool isFrozen = false;
+    public bool isInBarrel = false;
     [Header("Effects")]
     public ParticleSystem fartParticle;
     public GameObject wallHitParticleObj;
     public GameObject floorHitParticleObj;
     public GameObject pickUpParticleObj;
+    public GameObject boingTextParticleObj;
     [Header("Sounds")]
     public GameObject fart1SoundObj;
     public GameObject uhOhSoundObj;
@@ -216,9 +218,10 @@ public class PlayerController : MonoBehaviour
             }
         }
 
-        if (other.transform.tag == "Mushroom")
+        if (other.transform.tag == "Mushroom" && !isInBarrel)
         {
             other.transform.GetComponent<Mushroom>().BouncePlayer(this);
+            Instantiate(boingTextParticleObj, transform.position, Quaternion.identity);
         }
 
         if(other.tag == "Cinematic")
