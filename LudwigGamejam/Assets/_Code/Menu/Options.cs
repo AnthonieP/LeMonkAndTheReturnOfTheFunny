@@ -108,6 +108,9 @@ public class Options : MonoBehaviour
         player.isFrozen = false;
         player.PutOnHat(0);
 
+        Camera cam = FindObjectOfType<Camera>();
+        cam.transform.position = new Vector3(cam.transform.position.x, player.transform.position.y, cam.transform.position.z);
+
         FindObjectOfType<Camera>().orthographicSize = 5;
 
         if (FindObjectOfType<CameraController>() != null)

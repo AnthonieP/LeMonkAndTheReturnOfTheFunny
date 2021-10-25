@@ -28,7 +28,7 @@ public class CameraController : MonoBehaviour
                 goBack = false;
                 FindObjectOfType<Options>().RestartConfirmationButton();
                 goToPlayer = true;
-
+                FindObjectOfType<Cinematic>().endSong.Stop();
             }
         }
     }
